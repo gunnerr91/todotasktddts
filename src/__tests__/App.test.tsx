@@ -3,8 +3,8 @@ import App from "../components/App";
 import { shallow } from "enzyme";
 
 describe("jest and enzyme tets", () => {
-  it("renders app component", () => {
-    const component = shallow(<App />);
-    expect(component.find("h2").text()).toBe("much hello, such world!!");
+  it("app component contains input with button component and a button", () => {
+    let component = shallow(<App />);
+    expect(component.find("InputWithButton")).toHaveLength(1);
   });
 });
