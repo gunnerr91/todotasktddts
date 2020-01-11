@@ -1,6 +1,7 @@
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 import InputWithButton from "../../components/UserInterface/InputWIthButton";
 import React from "react";
+import { act } from "react-dom/test-utils";
 
 describe("Input with button", () => {
   it("contains a text input and a button", () => {
@@ -17,18 +18,24 @@ describe("Input with button", () => {
   });
 
   it("input value and on change handler matches value passed by props", () => {
-    const expectedValue = "dummyValue";
+    const expectedValue = "value from state";
     const expectedOnChangeHandler = jest.fn(() => {});
-    let textInput = shallow(
+    const setState = jest.fn();
+    const useStateSpy = jest.spyOn(React, "useState");
+    useStateSpy.mockImplementation(init => [init, setState]);
+    let component = shallow(
       <InputWithButton
-        TextInputValue={expectedValue}
+        TextInputValue={""}
         TextOnChangeHandler={expectedOnChangeHandler}
         ButtonLabel=""
         ButtonOnClickHandler={() => {}}
       />
-    ).find("[data-input-text]");
-    expect(textInput.prop("value")).toBe(expectedValue);
-    expect(textInput.prop("onChange")).toBe(expectedOnChangeHandler);
+    );
+    let textInput = component.find("[data-input-text]");
+    expect(textInput.prop("value")).toBe("");
+    textInput.prop("onChange")({ target: { value: "new value" } });
+    textInput.prop("onChange")({ target: { value: "new value" } });
+    expect(setState).toHaveBeenCalledTimes(2);
   });
 
   it("button contains label and on click handler", () => {

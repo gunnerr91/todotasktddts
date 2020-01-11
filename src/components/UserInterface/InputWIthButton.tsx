@@ -12,18 +12,21 @@ const InputWithButton: React.FC<InputWithButton> = ({
   TextOnChangeHandler,
   ButtonLabel,
   ButtonOnClickHandler
-}) => (
-  <div>
-    <input
-      type="text"
-      value={TextInputValue}
-      onChange={TextOnChangeHandler}
-      data-input-text
-    />
-    <button onClick={ButtonOnClickHandler} type="button" data-input-submit>
-      {ButtonLabel}
-    </button>
-  </div>
-);
+}) => {
+  const [textInputValue, setTextInputValue] = React.useState("");
+  return (
+    <div>
+      <input
+        type="text"
+        value={textInputValue}
+        onChange={event => setTextInputValue(event.target.value)}
+        data-input-text
+      />
+      <button onClick={ButtonOnClickHandler} type="button" data-input-submit>
+        {ButtonLabel}
+      </button>
+    </div>
+  );
+};
 
 export default InputWithButton;
