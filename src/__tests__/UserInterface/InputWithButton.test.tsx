@@ -6,23 +6,17 @@ import { act } from "react-dom/test-utils";
 describe("Input with button", () => {
   it("contains a text input and a button", () => {
     let component = shallow(
-      <InputWithButton
-        TextOnChangeHandler={() => {}}
-        TextInputValue=""
-        ButtonLabel=""
-        ButtonOnClickHandler={() => {}}
-      />
+      <InputWithButton ButtonLabel="" ButtonOnClickHandler={() => {}} />
     );
     expect(component.find("[data-input-text]")).toHaveLength(1);
     expect(component.find("[data-input-submit]")).toHaveLength(1);
   });
 
   it("input value and on change handler matches value passed by props", () => {
-    const expectedValue = "value from state";
     const expectedOnChangeHandler = jest.fn(() => {});
     const setState = jest.fn();
     const useStateSpy = jest.spyOn(React, "useState");
-    useStateSpy.mockImplementation(init => [init, setState]);
+    useStateSpy.mockImplementation(() => ["", setState]);
     let component = shallow(
       <InputWithButton
         TextInputValue={""}
@@ -33,8 +27,9 @@ describe("Input with button", () => {
     );
     let textInput = component.find("[data-input-text]");
     expect(textInput.prop("value")).toBe("");
-    textInput.prop("onChange")({ target: { value: "new value" } });
-    textInput.prop("onChange")({ target: { value: "new value" } });
+    const event = { target: { value: "new value" } };
+    textInput.prop("onChange")(event);
+    textInput.prop("onChange")(event);
     expect(setState).toHaveBeenCalledTimes(2);
   });
 

@@ -1,10 +1,18 @@
 import React from "react";
 import InputWithButton from "./UserInterface/InputWIthButton";
+import { AddTaskAction } from "../actions/TasksAction";
 
-const App: React.FC = () => {
+interface AppProps {
+  AddTaskAction: Function;
+}
+
+const App: React.FC<AppProps> = ({ AddTaskAction }) => {
   return (
     <div className="App">
-      <InputWithButton ButtonOnClickHandler={() => {}} ButtonLabel={""} />
+      <InputWithButton
+        ButtonOnClickHandler={() => AddTaskAction()}
+        ButtonLabel={"add to list"}
+      />
     </div>
   );
 };

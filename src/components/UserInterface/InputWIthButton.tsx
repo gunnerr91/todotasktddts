@@ -8,8 +8,6 @@ export interface InputWithButton {
 }
 
 const InputWithButton: React.FC<InputWithButton> = ({
-  TextInputValue,
-  TextOnChangeHandler,
   ButtonLabel,
   ButtonOnClickHandler
 }) => {
